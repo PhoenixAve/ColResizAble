@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/table.css">
+</head>
+<body>
+  <div class="table-wrap">
+    <div class="table-line"></div>
+    <table>
+      <tbody>
+        <tr>
+          <th>用户编号<span class="resize-line"></span></th>
+          <th>试用时间<span class="resize-line"></span></th>
+          <th>转正时间<span class="resize-line"></span></th>
+          <th>性别<span class="resize-line"></span></th>
+          <th>姓名拼音<span class="resize-line"></span></th>
+          <th>生日时间<span class="resize-line"></span></th>
+          <th>民族<span class="resize-line"></span></th>
+          <th>身高</th>
+        </tr>
+        <tr>
+          <td>2000001</td>
+          <td>1997-3-13</td>
+          <td>1997-3-13</td>
+          <td>1</td>
+          <td>WZJ</td>
+          <td>1965-3-13</td>
+          <td>汉</td>
+          <td>171</td>
+        </tr>
+        <tr>
+          <td>2000045</td>
+          <td>2001-2-15</td>
+          <td>2001-3-15</td>
+          <td>0</td>
+          <td>WY</td>
+          <td>1978-8-5</td>
+          <td>汉</td>
+          <td>162</td>
+        </tr>
+        <tr>
+          <td>2000046</td>
+          <td>2001-2-23</td>
+          <td>2001-3-23</td>
+          <td>0</td>
+          <td>LQ</td>
+          <td>2001-2-23</td>
+          <td>汉</td>
+          <td>171</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+  <script src="./js/table.jquery.js"></script>
+  <script>
+    $('table').colResizAble()
+  </script>
+</body>
+
+</html>

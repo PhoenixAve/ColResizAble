@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+.table-wrap {
+  position: relative;
+  margin: 100px auto;
+  width: 800px;
+}
+.table-wrap .table-line {
+  position: absolute;
+  width: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: none;
+  border-right: 1px dashed #d5d5d5;
+}
+.table-wrap table {
+  resize: both;
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 1px solid #eeeeee;
+  border-left: 1px solid #eeeeee;
+  word-break: break-all;
+  font-size: 12px;
+}
+.table-wrap table th {
+  position: relative;
+  -webkit-user-select: none;
+          user-select: none;
+}
+.table-wrap table th .resize-line {
+  position: absolute;
+  top: 0;
+  width: 10px;
+  right: -1px;
+  cursor: col-resize;
+  height: 100%;
+}
+.table-wrap table th,
+.table-wrap table td {
+  padding: 10px;
+  border-right: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+}
