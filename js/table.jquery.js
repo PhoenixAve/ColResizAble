@@ -27,6 +27,7 @@
       }
       $resizeLine.on('mousedown', function (event) {
         var $parentTh = $(this).parent('th')
+        var $thNext = $parentTh.next('th')
 
         if (!changeTable) maxWidth = tableWidth - $parentTh.nextAll('th').length * minWidth
 
@@ -48,14 +49,19 @@
         // 鼠标移动时计算移动的距离
         $document.on('mousemove.colResizAble', function (event) {
           moveDis = event.clientX - startX
-          if (thWidth + moveDis >= minWidth && thWidth + moveDis <= maxWidth) {
-            // 当表格拖拽在合理范围内时，即大于 minWidth 并且小于 maxWidth时
-            $tableLine.css('left', lineLeft + moveDis)
+          if (thWidth + moveDis <= minWidth) {
+            moveDis = minWidth - thWidth
+          } else if (thWidth + moveDis >= maxWidth) {
+            moveDis = maxWidth - thWidth
           }
+          $tableLine.css('left', lineLeft + moveDis)
         })
         $document.on('mouseup.colResizAble', function () {
           var newWidth = $parentTh.outerWidth() + moveDis
           $parentTh.outerWidth(newWidth)
+          $thNext.outerWidth(function (index, value) {
+            return value - moveDis
+          })
           if (newWidth < minWidth) {
             // 当表格的宽度被限制的时候，如果最终计算的表格不符合实际宽度，则设置为实际宽度
             $parentTh.outerWidth(minWidth)

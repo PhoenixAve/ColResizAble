@@ -1,0 +1,25 @@
+{
+  "name": "colresizable",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "babel": "babel",
+    "build": "babel js -d build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhoenixAve/ColResizAble.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhoenixAve/ColResizAble/issues"
+  },
+  "homepage": "https://github.com/PhoenixAve/ColResizAble#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}

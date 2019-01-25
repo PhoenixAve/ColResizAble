@@ -5,23 +5,24 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ColResizAble = function () {
-  function ColResizAble(dom, options) {
+  function ColResizAble(domTable, options) {
     _classCallCheck(this, ColResizAble);
 
     $.extend(options, ColResizAble.settings);
-    this.init(dom);
+    this.init(domTable);
   }
 
   _createClass(ColResizAble, [{
     key: 'init',
-    value: function init(dom) {
+    value: function init(domTable) {
       this.$document = $(document) || $(document.body);
-      this.$table = $(dom);
+      this.$table = $(domTable);
       this.$tableLine = $('.table-line');
       this.$resizeLine = $('.resize-line');
       this.tableWidth = this.$table.outerWidth();
 
       this.$parentTh = null;
+      this.$thNext = null;
       this.thWidth = 0;
 
       this.minWidth = 36;
@@ -34,10 +35,14 @@ var ColResizAble = function () {
 
       $('th').css('min-width', this.minWidth);
 
-      if (this.changeTable) this.maxWidth = Infinity;
+      if (this.changeTable) {
+        // 当表格可以改变时，最大宽度没有限制
+        this.maxWidth = Infinity;
+      }
       var self = this;
       this.$resizeLine.on('mousedown', function (event) {
         self.$parentTh = $(this).parent('th');
+        self.$thNext = self.$parentTh.next('th');
         self.onMouseDown(event);
       });
     }
@@ -53,8 +58,20 @@ var ColResizAble = function () {
       this.thWidth = this.$parentTh.outerWidth();
 
       this.startX = event.clientX; // 鼠标开始的水平距离
-      this.moveDis = 0; // 鼠标移动的水平距离
-      this.lineLeft = 0; // 示意线的定位距离
+
+      this.setTableLineStartPosition();
+
+      this.$document.on('mousemove.colResizAble', function (event) {
+        _this.onMouseMove(event);
+      });
+      this.$document.on('mouseup.colResizAble', function (event) {
+        _this.onMouseUp(event);
+        _this.$document.off('.colResizAble');
+      });
+    }
+  }, {
+    key: 'setTableLineStartPosition',
+    value: function setTableLineStartPosition() {
       var thRightToTableLeftDis = 0; // 鼠标拖拽的单元格的右侧到table的左边框的距离
 
       thRightToTableLeftDis += this.thWidth;
@@ -65,23 +82,18 @@ var ColResizAble = function () {
       this.lineLeft = thRightToTableLeftDis;
       this.$tableLine.css('left', this.lineLeft);
       this.$tableLine.show();
-      // 鼠标移动时计算移动的距离并设置给th
-      this.$document.on('mousemove.colResizAble', function (event) {
-        _this.onMouseMove(event);
-      });
-      this.$document.on('mouseup.colResizAble', function (event) {
-        _this.onMouseUp(event);
-        _this.$document.off('.colResizAble');
-      });
     }
   }, {
     key: 'onMouseMove',
     value: function onMouseMove(event) {
+      // 鼠标移动时计算移动的距离
       this.moveDis = event.clientX - this.startX;
-      if (this.thWidth + this.moveDis >= this.minWidth && this.thWidth + this.moveDis <= this.maxWidth) {
-        // 当表格的宽度被限制的时候，如果最终计算的表格不符合实际宽度，则设置为实际宽度
-        this.$tableLine.css('left', this.lineLeft + this.moveDis);
+      if (this.thWidth + this.moveDis <= this.minWidth) {
+        this.moveDis = this.minWidth - this.thWidth;
+      } else if (this.thWidth + this.moveDis >= this.maxWidth) {
+        this.moveDis = this.maxWidth - this.thWidth;
       }
+      this.$tableLine.css('left', this.lineLeft + this.moveDis);
     }
   }, {
     key: 'onMouseUp',
